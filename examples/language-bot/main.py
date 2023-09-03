@@ -14,7 +14,7 @@ Feel free to ask for vocabulary, grammar tips, or start a conversation to practi
 @bot()
 def on_message(message_history: List[Message], state: dict = None):
 
-    try:
+    # try:
      # Extract user's message
         user_message = message_history[-1]['content']
         print(user_message)
@@ -22,14 +22,16 @@ def on_message(message_history: List[Message], state: dict = None):
         if "vocabulary" in user_message[0]['value'].lower():
             # Provide a vocabulary word and its translation
             bot_response = OpenAI.generate(
-            system_prompt="Generate a new vocabulary word and its translation.",
+            system_prompt="Generate a new random un related to message history word and giveits translation.",
+            message_history=message_history,
             model="gpt-3.5-turbo",
             )
             response_text = bot_response
         elif "quiz" in user_message[0]['value'].lower():
             # Generate a language quiz question
             bot_response = OpenAI.generate(
-            system_prompt="Generate a language quiz question.",
+            system_prompt="ask for what language user want then Generate a language quiz question from that language.",
+            message_history=message_history,
             model="gpt-3.5-turbo",
             )
             response_text = bot_response
@@ -58,26 +60,26 @@ def on_message(message_history: List[Message], state: dict = None):
                 }
             ]
         }
-    except Exception as e:
-        # Handle exceptions and provide an error response
-        response = {
-            "data": {
-                "messages": [
-                    {
-                        "data_type": "STRING",
-                        "value": f"An error occurred: {str(e)}"
-                    }
-                ],
-                "state": state
-            },
-            "errors": [
-                {
-                    "message": str(e)
-                }
-            ]
-        }
+    # except Exception as e:
+    #     # Handle exceptions and provide an error response
+    #     response = {
+    #         "data": {
+    #             "messages": [
+    #                 {
+    #                     "data_type": "STRING",
+    #                     "value": f"An error occurred: {str(e)}"
+    #                 }
+    #             ],
+    #             "state": state
+    #         },
+    #         "errors": [
+    #             {
+    #                 "message": str(e)
+    #             }
+    #         ]
+    #     }
 
-    return {
+        return {
         "status_code": 200,
         "response": response
-    }
+        }
