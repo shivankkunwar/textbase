@@ -3,12 +3,13 @@ from textbase.models import OpenAI
 from typing import List
 
 # Load your OpenAI API key
-OpenAI.api_key = ""
+OpenAI.api_key = "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"
 
 # Prompt for GPT-3.5 Turbo
 SYSTEM_PROMPT = """You are chatting with an AI language learning assistant. You can practice and learn a new language with me. 
 I can provide vocabulary, quizzes, and even engage in conversations in your chosen language. 
 Feel free to ask for vocabulary, grammar tips, or start a conversation to practice.
+Available options: "vocabulary", "quiz"
 """
 
 @bot()
@@ -22,7 +23,7 @@ def on_message(message_history: List[Message], state: dict = None):
         if "vocabulary" in user_message[0]['value'].lower():
             # Provide a vocabulary word and its translation
             bot_response = OpenAI.generate(
-            system_prompt="Generate a new random un related to message history word and giveits translation.",
+            system_prompt="ask for what language user want then generate a new random un related to message history word and giveits translation.",
             message_history=message_history,
             model="gpt-3.5-turbo",
             )
